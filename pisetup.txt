@@ -1,4 +1,4 @@
-part one: downloads
+    part one: downloads
 download and install putty(windows)
 https://www.putty.org
 download rufus and install
@@ -10,20 +10,20 @@ take a micro sd card, and use a dock or a microsd to usb device and plug it into
 format your sd card
 
 
-part two: install raspbian using rufus
+    part two: install raspbian using rufus
 run rufus
 select your sd card in the first field
 select the raspbian image file for the .iso/.img
 select start and wait for it to finish.
 
 
-part three: plugging in the pi
+    part three: plugging in the pi
 after thats done pull out the sd card, put it into the sd card slot on the pi, its on the "bottom"
 plug in the HDMI cord to the pi first, than a keyboard and mouse, and last power cable.
 if you plug in power first it might not register your monitor/tv.
 
 
-part four: setting up your account
+    part four: setting up your account
 log into pi !do the first run setup! do not skip it! select U.S.A english keyboard or you will not find your @ symbol later... 
 if you don't your @ symbol is where your " is.
 log into your wifi on pi
@@ -34,7 +34,7 @@ enable VNC.... and everything else
 don't reboot.
 
 
-part five: setting up your pi as headless(the best thing ever)
+    part five: setting up your pi as headless(the best thing ever)
 look at the top right of your screen. you will see the black and blue VNC logo.
 open that.
 hit sign in, make and account. add the pi.
@@ -50,7 +50,7 @@ you now have a "headless" pi. you can also SSH to it.(see SSH info in the cool s
 
 
 
-part six: installing all the core tools for developing on a pi
+    part six: installing all the core tools for developing on a pi
 using SSH or VNC(or if you decided to not be cool and set it up headless) do the following.
 open terminal
 (this next part may take a while....)
@@ -61,7 +61,7 @@ sudo apt-get install ffmpeg
 
 
 
-part seven: installing the adafruit webIDE
+    part seven: installing the adafruit webIDE
 curl https://raw.githubusercontent.com/adafruit/Adafruit-WebIDE/master/scripts/install.sh | sudo sh
 open a browser on your main desktop.
 point your browser URL to "http://***.*.*.***:8080"
@@ -71,7 +71,7 @@ you now have the adafruit webIDE setup.
 
 
 
-part eight: update node-red and node.js
+    part eight: update node-red and node.js
 update-nodejs-and-nodered
 the next code will make nodered run on startup just like the adafruit webIDE, this is important if you want to develop on these things.
 sudo systemctl enable nodered.service
@@ -79,7 +79,7 @@ restart the Pi
 
 
 
-part nine: installing arduino IDE
+    part nine: installing arduino IDE
 you can do it via command line but.... it wont be the full version.. meaning you can't use the library import/search tool, 
 to install the full version you need to go to the arduino
 website and download the version for your pi model.
