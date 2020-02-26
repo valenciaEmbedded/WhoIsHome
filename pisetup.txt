@@ -24,7 +24,8 @@ if you plug in power first it might not register your monitor/tv.
 
 
 part four: setting up your account
-log into pi !do the first run setup! do not skip it! select U.S.A english keyboard or you will not find your @ symbol later... if you don't your @ symbol is where your " is.
+log into pi !do the first run setup! do not skip it! select U.S.A english keyboard or you will not find your @ symbol later... 
+if you don't your @ symbol is where your " is.
 log into your wifi on pi
 do not update yet. I have a reason.
 hit the "windows keyboard key" and go to prefferences, go to pi configuration.
@@ -79,7 +80,8 @@ restart the Pi
 
 
 part nine: installing arduino IDE
-you can do it via command line but.... it wont be the full version.. meaning you can't use the library import/search tool, to install the full version you need to go to the arduino
+you can do it via command line but.... it wont be the full version.. meaning you can't use the library import/search tool, 
+to install the full version you need to go to the arduino
 website and download the version for your pi model.
 it will be the ARM32bit for the pi3, get the stable release.
 open terminal.(replace the *'s with the release info) run these commands.
