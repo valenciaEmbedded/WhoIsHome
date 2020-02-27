@@ -1,3 +1,7 @@
+//the Arduino Script and walk through and setup of the home lab was done by : Dylan Poll
+//https://www.linkedin.com/in/dylan-poll-4a324a1a2/
+// I used the FastLED libraries demo-reel as a foundation for this, please check out the fastLED github!!
+
 #include <FastLED.h>
 FASTLED_USING_NAMESPACE
 #define DATA_PIN    9
