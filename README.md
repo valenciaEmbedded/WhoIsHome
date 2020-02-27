@@ -15,3 +15,11 @@ https://sites.google.com/view/valencia-robotics
 
 our clubs site
 https://sites.google.com/view/valenciatechclub
+
+the Python Script was provided by : Jonathan De La Cruz
+
+https://www.linkedin.com/in/jonathandelacruz96/
+
+the Arduino Script and walk through and setup of the home lab was done by : Dylan Poll
+
+https://www.linkedin.com/in/dylan-poll-4a324a1a2/
