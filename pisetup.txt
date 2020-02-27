@@ -1,220 +1,173 @@
-part one: downloads
-download and install putty(windows)
-https://www.putty.org
-download rufus and install
-https://rufus.ie
-download raspbian full buster and recommended software (.zip)
-https://www.raspberrypi.org/downloads/raspbian/
-extract the contents in the .zip this will be your [image file].
-take a micro sd card, and use a dock or a microsd to usb device and plug it into your computer
-format your sd card
 
-
-	part two: install raspbian using rufus
-run rufus
-select your sd card in the first field
-select the raspbian image file for the .iso/.img
-select start and wait for it to finish.
-
-
-	part three: plugging in the pi
-after thats done pull out the sd card, put it into the sd card slot on the pi, its on the "bottom"
-plug in the HDMI cord to the pi first, than a keyboard and mouse, and last power cable.
-if you plug in power first it might not register your monitor/tv.
-
-
-	part four: setting up your account
-log into pi !do the first run setup! do not skip it! select U.S.A english keyboard or you will not find your @ symbol later... if you don't your @ symbol is where your " is.
-log into your wifi on pi
-do not update yet. I have a reason.
-hit the "windows keyboard key" and go to prefferences, go to pi configuration.
-go to the interfaces tab.
-enable VNC.... and everything else
-don't reboot.
-
-
-	part five: setting up your pi as headless(the best thing ever)
-look at the top right of your screen. you will see the black and blue VNC logo.
-open that.
-hit sign in, make and account. add the pi.
-on your desktop/laptop open browser search on google VNC viewer download install.
-log into your account.
-check your email for the log in and authorize yourself.
-connect to your pi (type in the pi password at the second login menu)
-if it works turn off your pi.
-unplug your pi and everything.
-put the pi in a corner in your room and run only the power cable to it.
-you can connect to the pi using VNC viewer.
-you now have a "headless" pi. you can also SSH to it.(see SSH info in the cool stuff section)
-
-
-
-	part six: installing all the core tools for developing on a pi
-using SSH or VNC(or if you decided to not be cool and set it up headless) do the following.
-open terminal
-(this next part may take a while....)
-run these commands one at a time after each one is FINISHED.
-sudo apt-get update; sudo apt-get upgrade
-installing ffmpeg{
-sudo apt-get install ffmpeg
-
-
-
-	part seven: installing the adafruit webIDE
-curl https://raw.githubusercontent.com/adafruit/Adafruit-WebIDE/master/scripts/install.sh | sudo sh
-open a browser on your main desktop.
-point your browser URL to "http://***.*.*.***:8080"
-replace the "*" with your Pi's local IP address.
-make a username and pass.
-you now have the adafruit webIDE setup.
-
-
-
-	part eight: update node-red and node.js
-update-nodejs-and-nodered
-the next code will make nodered run on startup just like the adafruit webIDE, this is important if you want to develop on these things.
-sudo systemctl enable nodered.service
-restart the Pi
-
-
-
-	part nine: installing arduino IDE
-you can do it via command line but.... it wont be the full version.. meaning you can't use the library import/search tool, to install the full version you need to go to the arduino
-website and download the version for your pi model.
-it will be the ARM32bit for the pi3, get the stable release.
-open terminal.(replace the *'s with the release info) run these commands.
-cd Downloads/
-tar -xf arduino-1.*.*-linuxarm.tar.xz
-sudo mv arduino-1.*.* /opt
-sudo /opt/arduino-1.*.*/install.sh
-
-
-	Part Ten: ffmpeg
-1x webcam logitech
-(the next items don't include what you need to run a 24/7 stream)
-1x breadboard
-a second raspberry pi model 3 b(with sd card)
-individually addressable LED strip.
-arduino nano
-jumper wire
-enable VNC viewer on both Pi(s)
-pi preferences, enable vnc make a account with VNC viewer
-IMPORTANT: on the pi you plan to use as a public work bench, go to vnc server settings, options, expert tab, and make idle timeout : 0 seconds, it's set to close Vnc viewer if idle after an hour, doing this will stop your window from closing mid stream
-install vnc viewer on streamer pi in terminal.
-	sudo apt-get install vnc-java
-	y
-plug in your webcam and..install your webcam.
-	sudo apt install fswebcam
-install ffmpeg
-	sudo apt-get install ffmpeg
-	y
-this is where your own choices come into play.
-
-in terminal, run this script to open a window on your streamer pi's desktop for your webcam.
-ffplay -window_title "pi-cam" /dev/video0 -video_size 1920x1080  -vf crop=400:500:300:50 -framerate 20
-ffplay will allow you to see this in a window named pi-cam, the webcam its showing you is at location dev/video0 and its original size is 1920x1080. I only want to see the crop=width:height:topleft_X:topleft_Y and a framerate of 20 is enough for me.
-the next code will stream to twitch.
-ffmpeg -f x11grab -video_size 1280x1024 -framerate 24 -i $DISPLAY -f alsa -vf scale=1280x720 -c:v h264 -g 24 -b:v 2M -preset ultrafast -c:a aac -pix_fmt yuv420p -f flv "rtmp://live-lax.twitch.tv/app/(insertyourstreamkeyhere)"
--f x11grab is used to grab your screen.
-my screen resolution is set to 1280x1024
-I want to display that in 1280x720 so -vf video format.
-
-2m= 2mgb upload rate.
--f flv is to format the video into .flv so twitch can use it.
-now you can give your team your VNC credentials to the workbench Pi and they can see the changes to the led strip live remotely.
-Shoutout to this guy~! his video helped me get on track, I still had to figure out how to pop in my webcam though... and find out about ffmpeg X/
-
-Arthur Reeder
-https://www.youtube.com/watch?v=kb_5_9GkwZc
-
-NOTE: I am not the most informed person, this simply works for my needs, if anyone has constructive advice i would love to hear it but please don't be mean
-one of the possible routes to take this further, would be to use this mechanic to stream this, and use another pi and the chrome extension lightstream to fetch that stream and than feed the webcam into that or in any other way.
+download and install putty(windows) 
+https://www.putty.org 
+download rufus and install 
+https://rufus.ie 
+download raspbian full buster and recommended software (.zip) 
+https://www.raspberrypi.org/downloads/raspbian/ 
+extract the contents in the .zip this will be your [image file]. 
+take a micro sd card, and use a dock or a microsd to usb device and plug it into your computer 
+format your sd card 
+part two: install raspbian using rufus 
+run rufus 
+select your sd card in the first field 
+select the raspbian image file for the .iso/.img 
+select start and wait for it to finish. 
+part three: plugging in the pi 
+after thats done pull out the sd card, put it into the sd card slot on the pi, its on the "bottom" 
+plug in the HDMI cord to the pi first, than a keyboard and mouse, and last power cable. 
+if you plug in power first it might not register your monitor/tv. 
+part four: setting up your account 
+log into pi !do the first run setup! do not skip it! select U.S.A english keyboard or you will not find your @ symbol later... if you don't your @ symbol is where your " is. 
+log into your wifi on pi 
+do not update yet. I have a reason. 
+hit the "windows keyboard key" and go to prefferences, go to pi configuration. 
+go to the interfaces tab. 
+enable VNC.... and everything else 
+don't reboot. 
+part five: setting up your pi as headless(the best thing ever) 
+look at the top right of your screen. you will see the black and blue VNC logo. 
+open that. 
+hit sign in, make and account. add the pi. 
+on your desktop/laptop open browser search on google VNC viewer download install. 
+log into your account. 
+check your email for the log in and authorize yourself. 
+connect to your pi (type in the pi password at the second login menu) 
+if it works turn off your pi. 
+unplug your pi and everything. 
+put the pi in a corner in your room and run only the power cable to it. 
+you can connect to the pi using VNC viewer. 
+you now have a "headless" pi. you can also SSH to it.(see SSH info in the cool stuff section) 
+part six: installing all the core tools for developing on a pi 
+using SSH or VNC(or if you decided to not be cool and set it up headless) do the following. 
+open terminal 
+(this next part may take a while....) 
+run these commands one at a time after each one is FINISHED. 
+sudo apt-get update; sudo apt-get upgrade 
+installing ffmpeg{ 
+sudo apt-get install ffmpeg 
+part seven: installing the adafruit webIDE 
+curl https://raw.githubusercontent.com/adafruit/Adafruit-WebIDE/master/scripts/install.sh | sudo sh 
+open a browser on your main desktop. 
+point your browser URL to "http://***.*.*.***:8080" 
+replace the "*" with your Pi's local IP address. 
+make a username and pass. 
+you now have the adafruit webIDE setup. 
+part eight: update node-red and node.js 
+update-nodejs-and-nodered 
+the next code will make nodered run on startup just like the adafruit webIDE, this is important if you want to develop on these things. 
+sudo systemctl enable nodered.service 
+restart the Pi 
+part nine: installing arduino IDE 
+you can do it via command line but.... it wont be the full version.. meaning you can't use the library import/search tool, to install the full version you need to go to the arduino 
+website and download the version for your pi model. 
+it will be the ARM32bit for the pi3, get the stable release. 
+open terminal.(replace the *'s with the release info) run these commands. 
+cd Downloads/ 
+tar -xf arduino-1.*.*-linuxarm.tar.xz 
+sudo mv arduino-1.*.* /opt 
+sudo /opt/arduino-1.*.*/install.sh 
+Part Ten: ffmpeg 
+1x webcam logitech 
+(the next items don't include what you need to run a 24/7 stream) 
+1x breadboard 
+a second raspberry pi model 3 b(with sd card) 
+individually addressable LED strip. 
+arduino nano 
+jumper wire 
+enable VNC viewer on both Pi(s) 
+pi preferences, enable vnc make a account with VNC viewer 
+IMPORTANT: on the pi you plan to use as a public work bench, go to vnc server settings, options, expert tab, and make idle timeout : 0 seconds, it's set to close Vnc viewer if idle after an hour, doing this will stop your window from closing mid stream 
+install vnc viewer on streamer pi in terminal. 
+sudo apt-get install vnc-java 
+y 
+plug in your webcam and..install your webcam. 
+sudo apt install fswebcam 
+install ffmpeg 
+sudo apt-get install ffmpeg 
+y 
+this is where your own choices come into play. 
+in terminal, run this script to open a window on your streamer pi's desktop for your webcam. 
+ffplay -window_title "pi-cam" /dev/video0 -video_size 1920x1080 -vf crop=400:500:300:50 -framerate 20 
+ffplay will allow you to see this in a window named pi-cam, the webcam its showing you is at location dev/video0 and its original size is 1920x1080. I only want to see the crop=width:height:topleft_X:topleft_Y and a framerate of 20 is enough for me. 
+the next code will stream to twitch. 
+ffmpeg -f x11grab -video_size 1280x1024 -framerate 24 -i $DISPLAY -f alsa -vf scale=1280x720 -c:v h264 -g 24 -b:v 2M -preset ultrafast -c:a aac -pix_fmt yuv420p -f flv "rtmp://live-lax.twitch.tv/app/(insertyourstreamkeyhere)" 
+-f x11grab is used to grab your screen. 
+my screen resolution is set to 1280x1024 
+I want to display that in 1280x720 so -vf video format. 
+2m= 2mgb upload rate. 
+-f flv is to format the video into .flv so twitch can use it. 
+now you can give your team your VNC credentials to the workbench Pi and they can see the changes to the led strip live remotely. 
+Shout-out to this guy~! his video helped me get on track, I still had to figure out how to pop in my webcam though... and find out about ffmpeg X/ 
+Arthur Reeder 
+https://www.youtube.com/watch?v=kb_5_9GkwZc 
+NOTE: I am not the most informed person, this simply works for my needs, if anyone has constructive advice i would love to hear it but please don't be mean 
+one of the possible routes to take this further, would be to use this mechanic to stream this, and use another pi and the chrome extension lightstream to fetch that stream and than feed the webcam into that or in any other way. 
 https://chrome.google.com/webstore/deta 
-ALSO: if you want to add in audio, as seen in the mans youtube video, you can use this string, I did not want to have my house being recorded and sent to twitch, this is sitting in my room so I do not stream any audio, it also helps lessen the load on the pi.
-ffmpeg -f x11grab -video_size 1280x1024 -framerate 24 -i $DISPLAY -f alsa -i default -af acompressor=threshold=0.089:ratio=9:attack=200:release=1000 -vf scale=1280x720 -c:v h264 -g 24 -b:v 2M -preset ultrafast -c:a aac -pix_fmt yuv420p -f flv "rtmp://live-lax.twitch.tv/app/(insertyourstreamkeyhere)"
-
-
-now to the final stretch, implimenting arduino and pi serial communication with python. 
----the who is home project---
-The project uses a python script that runs nmap in terminal, copys the contents of that, parses out the text we don't need, and compares the mac addresses on the network against the listed mac addresses and if there is a match that person is home. 
-	the mac addresses were found by doing investigative work on the rueter, but the nmap tool gives you information about the devices in the text file generated by the code.
-
-if the user is present, it sends a charactor to the arduino, and the arduino waits until the check list is done, and lights up LEDs corrisponding to the profiles listed for the mac addresses of present devices. 
-
-you can add other things, like having discord bots run commands upon people comming or going with this same code by using the subruetine operator to execute terminal commands within your python script. 
-
+ALSO: if you want to add in audio, as seen in the mans youtube video, you can use this string, I did not want to have my house being recorded and sent to twitch, this is sitting in my room so I do not stream any audio, it also helps lessen the load on the pi. 
+ffmpeg -f x11grab -video_size 1280x1024 -framerate 24 -i $DISPLAY -f alsa -i default -af acompressor=threshold=0.089:ratio=9:attack=200:release=1000 -vf scale=1280x720 -c:v h264 -g 24 -b:v 2M -preset ultrafast -c:a aac -pix_fmt yuv420p -f flv "rtmp://live-lax.twitch.tv/app/(insertyourstreamkeyhere)" 
+now to the final stretch, implementing arduino and pi serial communication with python. 
+---the who is home project--- 
+The project uses a python script that runs nmap in terminal, copy the contents of that, parses out the text we don't need, and compares the mac addresses on the network against the listed mac addresses and if there is a match that person is home. 
+the mac addresses were found by doing investigative work on the router, but the nmap tool gives you information about the devices in the text file generated by the code. 
+if the user is present, it sends a character to the arduino, and the arduino waits until the check list is done, and lights up LEDs corresponding to the profiles listed for the mac addresses of present devices. 
+you can add other things, like having discord bots run commands upon people coming or going with this same code by using the sub-process operator to execute terminal commands within your python script. 
 so first we install nmap 
-
-sudo apt-get install nmap.
-
-next you will want to download the files on our clubs Git-Hub.
-https://github.com/ValenciaRobotics/embeddedclub
-
-for the python code, the raspbian installation comes with everything used in this code, so you do not need anything additional installed.  we used
-import re,import subprocess,import time,import serial
-it is important to note that python uses indentation for seperating out code blocks, so be aware of that if you decide to change the way the code is written :)
-the py comes with thonny ide and a few other options, i find that running the script in thonny is really straight forward, if you click on the file and attempt to execute it, it was suggest or assume thonny is what you wanted to use.
-before you run the program, you will need to edit out the following.
-
-line 14: the * symbols are used to mask my own rueter information, you will have to replace that with your own local ip. it would be the same as what you use to connect to your rueter. 
-lines 28,38,48,58: 	these all use the * symbol to mask device mac addresses listed from my network, you have to change those to the mac addresses of the devices on your own network to detect connections.
-
-why mac addresses? because without researving locations for your device, they are sure to stay the same unless someone is spoofing. 
-
+sudo apt-get install nmap. 
+next you will want to download the files on our clubs Git-Hub. 
+https://github.com/ValenciaRobotics/embeddedclub 
+for the python code, the raspbian installation comes with everything used in this code, so you do not need anything additional installed. we used 
+import re,import subprocess,import time,import serial 
+it is important to note that python uses indentation for separating out code blocks, so be aware of that if you decide to change the way the code is written :) 
+the py comes with thonny ide and a few other options, i find that running the script in thonny is really straight forward, if you click on the file and attempt to execute it, it was suggest or assume thonny is what you wanted to use. 
+before you run the program, you will need to edit out the following. 
+line 14: the * symbols are used to mask my own router information, you will have to replace that with your own local ip. it would be the same as what you use to connect to your router. 
+lines 28,38,48,58: these all use the * symbol to mask device mac addresses listed from my network, you have to change those to the mac addresses of the devices on your own network to detect connections. 
+why mac addresses? because without reserving locations for your device, they are sure to stay the same unless someone is spoofing. 
 problems with this code, it will only detect while a connection is actively using internet, so it may not detected despite a user being present. 
-in the arduino code, you wil want to change the following.
-
-first, you will want to go to the tools tab, select libraries manager, and search for "fastLED" and install the library for "fastLED".
-
-next you will need to load the "who is home" .ino code from the github page and change the following as you desire.
-line 86:  change the colors based on what you want your users to have attached :) 
-         //turn on what you need
-    if(d == 1){                 
-        leds[0] = 0xdd8bff;  //purple  
-        leds[1] = 0xdd8bff;}
-    if(l == 1){
-        leds[2] = CRGB::Green; 
-        leds[3] = CRGB::Green;}
-    if(k == 1){
-        leds[4] = CRGB::Red;  
-        leds[5] = CRGB::Red; }
-    if(j == 1){
-        leds[6] = CRGB::Blue; 
-        leds[7] = CRGB::Blue;}
-FastLED.show();
-delay(30000);           //10 second wait  
-
-
-
-on the switch case  a brief explanation for how to add more users is the following
-void loop(){
-   if (Serial.available() > 0) {     
-        Serial.println();
-        person = Serial.read();      
-            delay(1000);             
-       switch(person){
-            case'D':
-              d = 1;
-              person = 'F'; 
-              count=count+1;
-              break;
-            case'd':
-              d = 0;
-              person = 'F'; 
-              count=count+1;
-              break;
-
-the uppercase D is the recieved charactor from the python script, so it knows that the user is present because the recieved letter is the uppercase D, so it changes the value of the INTIGER d to 1, if it is a lowercase than it knows they are absent so the INTIGER is set to 0. 
-
-the condition for leds lighting in the script from before uses a statement that IF d is 1 than it will light the led, but if it is not that led stays as "black" meaning unlit.
-
+in the arduino code, you will want to change the following. 
+first, you will want to go to the tools tab, select libraries manager, and search for "fastLED" and install the library for "fastLED". 
+next you will need to load the "who is home" .ino code from the github page and change the following as you desire. 
+line 86: change the colors based on what you want your users to have attached :) 
+//turn on what you need 
+if(d == 1){ 
+leds[0] = 0xdd8bff; //purple 
+leds[1] = 0xdd8bff;} 
+if(l == 1){ 
+leds[2] = CRGB::Green; 
+leds[3] = CRGB::Green;} 
+if(k == 1){ 
+leds[4] = CRGB::Red; 
+leds[5] = CRGB::Red; } 
+if(j == 1){ 
+leds[6] = CRGB::Blue; 
+leds[7] = CRGB::Blue;} 
+FastLED.show(); 
+delay(30000); //10 second wait 
+on the switch case a brief explanation for how to add more users is the following 
+void loop(){ 
+if (Serial.available() > 0) { 
+Serial.println(); 
+person = Serial.read(); 
+delay(1000); 
+switch(person){ 
+case'D': 
+d = 1; 
+person = 'F'; 
+count=count+1; 
+break; 
+case'd': 
+d = 0; 
+person = 'F'; 
+count=count+1; 
+break; 
+the uppercase D is the received character from the python script, so it knows that the user is present because the received letter is the uppercase D, so it changes the value of the INTEGER d to 1, if it is a lowercase than it knows they are absent so the INTEGER is set to 0. 
+the condition for leds lighting in the script from before uses a statement that IF d is 1 than it will light the led, but if it is not that led stays as "black" meaning unlit. 
 this code uses the library "fastLED" and there is a lot of documentation on this. 
-note that if you change the charctors, add charactors or remove charctors you will have to change the python script to return the ones you changed them too, you will also have to change the condition in the void loop.
-  if(count == 4){holdup();}
-  }
-the count will have to reflect the number of devices you are "tracking". in my case it is 4, so it waits until 4 devices have been declared as present or absent and then it updaes the LED strip.
-
+note that if you change the characters, add characters or remove characters you will have to change the python script to return the ones you changed them too, you will also have to change the condition in the void loop. 
+if(count == 4){holdup();} 
+} 
+the count will have to reflect the number of devices you are "tracking". in my case it is 4, so it waits until 4 devices have been declared as present or absent and then it updates the LED strip. 
 in the python code, the lines 31,34,41,44,51,54,61,64 have the following line 
-ser.write(b'*') #sends character cast as byte over serial
-where * is a charactor it is sending to the arduino. change this if you change the code in the arduino or vice versa :) 
-
+ser.write(b'*') #sends character cast as byte over serial 
+where * is a character it is sending to the arduino. change this if you change the code in the arduino or vice versa :) 
