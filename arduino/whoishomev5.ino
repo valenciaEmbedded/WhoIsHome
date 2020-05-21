@@ -16,7 +16,7 @@ CRGB leds[NUM_LEDS];
 #define BRIGHTNESS  10
 #define FRAMES_PER_SECOND  20
 
-char person = 'F';// the default value that gets ignored
+char person = 'F';                        // the default value that gets ignored
 
 //below are all used to identify people
 int d=0;//person 1
@@ -24,26 +24,26 @@ int l=0;//person 2
 int k=0;//person 3
 int j=0;//person 4
 
-int count;//count used to check if each person is or is not home. goes up to 4 in this case.
+int count;                                //count used to check if each person is or is not home. goes up to 4 in this case.
 
 void RunTheLights();
 
 void setup() {
-  delay(3000); // 3 second delay for recovery
+  delay(3000);                            // 3 second delay for recovery
   FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
   FastLED.delay(1000/FRAMES_PER_SECOND);
-  Serial.begin(9600);//serial is used for inputs
+  Serial.begin(9600);                     //serial is used for inputs
 }
 
 
 void loop(){
   
-   if (Serial.available() > 0) {     //checks that serial is running or this will not work
+   if (Serial.available() > 0) {          //checks that serial is running or this will not work
     
-        Serial.println();// clears the prior value read.
-        person = Serial.read();      //reads input value
-        delay(1000);//one second delay
+        Serial.println();                 // clears the prior value read.
+        person = Serial.read();           //reads input value
+        delay(1000);                      //one second delay
                        
         switch(person){     //this checks the person against our possible casses.
             case'D':
